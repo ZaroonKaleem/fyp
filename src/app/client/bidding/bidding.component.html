@@ -1,0 +1,80 @@
+<!-- <app-header></app-header>
+
+<div class="bidding-container">
+    <div class="bidding-form">
+      <h2>Place Your Bid</h2>
+      <form >
+        <div class="form-group">
+          <label for="item">Item</label>
+          <input type="text" id="item" name="item" required>
+        </div>
+        <div class="form-group">
+          <label for="amount">Bid Amount</label>
+          <input type="number" id="amount" name="amount" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Bid</button>
+      </form>
+    </div>
+    <div class="bids-list">
+      <h2>All Bids</h2>
+      <ul>
+        <li *ngFor="let bid of bids">
+          <strong>{{ bid.item }}</strong>: {{ bid.amount | currency }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <app-footer></app-footer> -->
+
+
+  <!-- <div *ngIf="auction" class="auction-details">
+    <img [src]="auction.image" alt="{{ auction.title }}" class="auction-image">
+    <h2>{{ auction.title }}</h2>
+    <p>{{ auction.description }}</p>
+    <p>Starting Amount: {{ auction.startingAmount | currency }}</p>
+    <p>Time Left: {{ auction.timeLeft }}</p>
+  </div>
+   -->
+  
+
+<app-header></app-header>
+
+   <div *ngIf="auction" class="auction-details container">
+    <div class="row">
+      <div class="col-md-6">
+        <img [src]="auction.image" alt="{{ auction.title }}" class="auction-image img-fluid">
+      </div>
+      <div class="col-md-6">
+        <h2 class="auction-title">{{ auction.title }}</h2>
+        <p class="auction-description">{{ auction.description }}</p>
+        <p class="auction-starting-amount">Starting Amount: {{ auction.startingAmount | currency }}</p>
+        <p class="auction-time-left">Time Left: {{ auction.timeLeft }}</p>
+      </div>
+    </div>
+  
+    <hr>
+  
+    <div class="bidding-section">
+      <h3>Place Your Bid</h3>
+      <form >
+        <div class="form-group">
+          <label for="bidAmount">Bid Amount</label>
+          <input type="number" id="bidAmount" [(ngModel)]="bidAmount" name="bidAmount" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Submit Bid</button>
+      </form>
+    </div>
+  
+    <hr>
+  
+    <div class="bids-list">
+      <h3>All Bids</h3>
+      <ul class="list-group">
+        <li *ngFor="let bid of bids" class="list-group-item">
+          <strong>{{ bid.item }}</strong>: {{ bid.amount | currency }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <app-footer></app-footer>

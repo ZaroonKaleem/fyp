@@ -1,0 +1,75 @@
+<app-header></app-header>
+
+
+<!-- auction-list.component.html -->
+
+<div class="auction-list">
+  <h2>Available Auctions</h2>
+
+  <div *ngIf="auctions.length > 0; else noAuctions" class="auction-container">
+    <div *ngFor="let auction of auctions" class="auction-card">
+      <div class="auction-card-image">
+        <img [src]="auction.imageUrl" style="object-fit: contain;" alt="{{ auction.name }}" />
+      </div>
+      <div class="auction-card-body">
+        <h3 class="auction-title">{{ auction.name }}</h3>
+        <p class="auction-description">{{ auction.description }}</p>
+        <p><strong>Starting Price:</strong> ${{ auction.startingPrice }}</p>
+        <p><strong>Duration:</strong> {{ auction.duration }} hours</p>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noAuctions>
+    <p>No auctions available at the moment.</p>
+  </ng-template>
+</div>
+
+
+
+<!-- <div class="container mt-5">
+  <div class="text-center mb-5">
+    <h1 class="display-4 text-primary font-weight-bold">Auctions</h1>
+    <p class="lead text-muted">Browse through our current, upcoming, and finished auctions.</p>
+  </div>
+
+  <div class="filter-section mb-4 p-4 bg-light rounded shadow-sm">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label for="category" class="form-label font-weight-bold">Category</label>
+        <select id="category" class="form-control" (change)="filterAuctions()">
+          <option value="" disabled selected>Select Category</option>
+          <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="status" class="form-label font-weight-bold">Auction Status</label>
+        <select id="status" class="form-control" (change)="filterAuctions()">
+          <option value="" disabled selected>Select Status</option>
+          <option value="current">Current Auctions</option>
+          <option value="upcoming">Upcoming Auctions</option>
+          <option value="finished">Finished Auctions</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="row">
+      <div class="col-md-4 col-sm-6 mb-4" *ngFor="let auction of filteredAuctions">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title font-weight-bold">{{ auction.title }}</h5>
+            <p class="card-text"><strong>Category:</strong> {{ auction.category }}</p>
+            <p class="card-text"><strong>Date:</strong> {{ auction.date | date }}</p>
+            <p class="card-text"><strong>Status:</strong> <span class="badge badge-info">{{ auction.status }}</span></p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary btn-sm">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div> -->
+<app-footer></app-footer>

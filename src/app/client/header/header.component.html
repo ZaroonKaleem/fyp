@@ -1,0 +1,38 @@
+<header>
+  <div class="header-content">
+    <img src="/assets/LAS logo.PNG" style="width: 80px;" alt="Logo">
+    
+    <nav class="nav-links">
+      <a routerLink="/home">Home</a>
+      <a routerLink="/about">About</a>
+      <a routerLink="/auctions">Auctions</a>
+      <a routerLink="/contact">Contact</a>
+    </nav>
+    
+    <div class="right-menu">
+      <a routerLink="/profile"><i class="fa-solid fa-user"></i>&nbsp;Profile</a>
+      <a routerLink="/reminders"><i class="fa-solid fa-bell"></i>&nbsp;Reminders</a>
+      <a (click)="logout()">
+        <div class="button-container">
+          <button class="btn btn-danger">Logout</button>
+        </div>
+      </a>
+    </div>
+    
+    <button id="hamburger-btn" class="hamburger-btn" (click)="toggleMenu()">&#9776;</button>
+  </div>
+  
+  <div [ngClass]="{'dropdown-menu': true, 'show': menuVisible}">
+    <a routerLink="/home">Home</a>
+    <a routerLink="/about">About</a>
+    <a routerLink="/auctions">Auctions</a>
+    <a routerLink="/contact">Contact</a>
+    <a routerLink="/profile"><i class="fa-solid fa-user"></i>&nbsp;Profile</a>
+    <a routerLink="/reminders"><i class="fa-solid fa-bell"></i>&nbsp;Reminders</a>
+    <a (click)="logout()">
+      <div class="button-container">
+        <button class="btn btn-danger">Logout</button>
+      </div>
+    </a>
+  </div>
+</header>
