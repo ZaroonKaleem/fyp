@@ -25,6 +25,30 @@ const auctionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now, // Automatically sets the date of creation
   },
+  accepted: {
+    type: String,
+    enum: ['pending', 'accepted', 'rejected'], // Possible statuses
+    default: 'pending', // Field to track if the auction is accepted
+  },
+  bids: [{
+    bidderName: {
+      type: String,
+      required: true,
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId, // Reference to the User model
+      ref: 'User', // Ensure this matches the User model name
+      required: false,
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    bidTime: {
+      type: Date,
+      default: Date.now,
+    },
+  }],
 });
 
 module.exports = mongoose.model('Auction', auctionSchema);

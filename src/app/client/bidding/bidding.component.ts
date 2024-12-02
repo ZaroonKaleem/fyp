@@ -1,75 +1,9 @@
-// import { Component, OnInit } from '@angular/core';
-// import { ActivatedRoute } from '@angular/router';
-// import { BidService } from '../../services/bidding.service';
-
-// export interface Bid {
-//   item: string;
-//   amount: number;
-//   image: string; // Add the image property
-// }
-
-
-// @Component({
-//   selector: 'app-bidding',
-//   templateUrl: './bidding.component.html',
-//   styleUrl: './bidding.component.css'
-// })
-// export class BiddingComponent implements OnInit {
-//   auctionId: number | null = null;
-//   auction: any; // Replace `any` with your auction interface/type if defined
-
-//   constructor(private route: ActivatedRoute) {}
-
-//   ngOnInit(): void {
-//     const idParam = this.route.snapshot.paramMap.get('id');
-//     this.auctionId = idParam !== null ? +idParam : null;
-//     if (this.auctionId !== null) {
-//       this.loadAuctionDetails(this.auctionId);
-//     } else {
-//       console.error('Auction ID is null');
-//       // Handle the case where auctionId is null (e.g., show an error message or redirect)
-//     }
-//   }
-
-//   loadAuctionDetails(id: number) {
-//     // Replace this mock with your actual data retrieval logic
-//     const mockAuctions = [
-//       {
-//         id: 1,
-//         title: 'Antique Vase',
-//         description: 'A beautiful antique vase from the Ming Dynasty.',
-//         image: 'assets/vase.jpg',
-//         timeLeft: '2h 45m',
-//         startingAmount: 100
-//       },
-//       {
-//         id: 2,
-//         title: 'Vintage Car',
-//         description: 'A restored vintage car from the 1960s.',
-//         image: 'assets/car.jpg',
-//         timeLeft: '5h 30m',
-//         startingAmount: 20000
-//       },
-//       {
-//         id: 3,
-//         title: 'Modern Art',
-//         description: 'A stunning piece of modern art by a renowned artist.',
-//         image: 'assets/painting.jpg',
-//         timeLeft: '1d 4h',
-//         startingAmount: 5000
-//       }
-//     ];
-
-//     this.auction = mockAuctions.find(auction => auction.id === id);
-//   }
-// }
-
-
-
-
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuctionService } from '../../services/auction.service';
+import { AuthService } from '../../services/auth.service';
+import { AuthorizationService } from '../../services/authorization.service';
+import { ToastrService } from 'ngx-toastr';
 
 export interface Bid {
   item: string;
@@ -80,85 +14,98 @@ export interface Bid {
 @Component({
   selector: 'app-bidding',
   templateUrl: './bidding.component.html',
-  styleUrls: ['./bidding.component.css'] // Fix the typo here from `styleUrl` to `styleUrls`
+  styleUrls: ['./bidding.component.css']
 })
 export class BiddingComponent implements OnInit {
-  auctionId: number | null = null;
-  auction: any; // You can replace `any` with your auction interface/type if defined
-  bidAmount: number | null = null; // Define the bidAmount property
-  bids: Bid[] = [ // Initialize with some dummy bids
-    {
-      item: 'Anonymous User',
-      amount: 120,
-      image: 'assets/vase.jpg'
-    },
-    {
-      item: 'Anonymous User',
-      amount: 200,
-      image: 'assets/car.jpg'
-    },
-    {
-      item: 'Anonymous User',
-      amount: 300,
-      image: 'assets/painting.jpg'
-    }
-  ];
-  constructor(private route: ActivatedRoute) {}
+  auction: any = {};
+  topBids: Array<{ bidderName: string; amount: number }> = [];
+  newBidAmount: number = 0;
+  currentUser: any;
+
+  
+
+  constructor(
+    private route: ActivatedRoute,
+    private auctionService: AuctionService,
+    private authService: AuthorizationService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    this.auctionId = idParam !== null ? +idParam : null;
-    if (this.auctionId !== null) {
-      this.loadAuctionDetails(this.auctionId);
-    } else {
-      console.error('Auction ID is null');
-      // Handle the case where auctionId is null (e.g., show an error message or redirect)
+    const auctionId = this.route.snapshot.paramMap.get('id');
+    if (auctionId) {
+      this.loadAuctionDetails(auctionId);
+      this.loadTopBids(auctionId);
     }
   }
 
-  loadAuctionDetails(id: number) {
-    // Replace this mock with your actual data retrieval logic
-    const mockAuctions = [
-      {
-        id: 1,
-        title: 'Antique Vase',
-        description: 'A beautiful antique vase from the Ming Dynasty.',
-        image: 'assets/vase.jpg',
-        timeLeft: '2h 45m',
-        startingAmount: 100
-      },
-      {
-        id: 2,
-        title: 'Vintage Car',
-        description: 'A restored vintage car from the 1960s.',
-        image: 'assets/car.jpg',
-        timeLeft: '5h 30m',
-        startingAmount: 20000
-      },
-      {
-        id: 3,
-        title: 'Modern Art',
-        description: 'A stunning piece of modern art by a renowned artist.',
-        image: 'assets/painting.jpg',
-        timeLeft: '1d 4h',
-        startingAmount: 5000
-      }
-    ];
-
-    this.auction = mockAuctions.find(auction => auction.id === id);
+  loadAuctionDetails(auctionId: string): void {
+    this.auctionService.getAuctionDetails(auctionId).subscribe((data: any) => {
+      this.auction = data;
+    });
   }
 
-  submitBid() {
-    if (this.bidAmount !== null && this.auction) {
-      const newBid: Bid = {
-        item: this.auction.title,
-        amount: this.bidAmount,
-        image: this.auction.image
-      };
-      this.bids.push(newBid);
-      this.bidAmount = null; // Reset bid amount after submitting
-    } else {
-      console.error('Bid amount is null or auction details are not available');
+  loadTopBids(auctionId: string): void {
+    this.auctionService.getTopBids(auctionId).subscribe((bids: { bidderName: string; amount: number }[]) => {
+      this.topBids = bids;
+    });
+  }
+
+  // submitBid(): void {
+  //   // Check if there are any existing bids
+  //   const currentHighestBid = this.topBids.length > 0 ? this.topBids[0].amount : this.auction.startingPrice;
+
+  //   // Validate that the new bid is higher than the current highest bid
+  //   if (this.newBidAmount <= currentHighestBid) {
+  //     alert(`Your bid must be greater than the current highest bid of ${currentHighestBid}.`);
+  //     return;
+  //   }
+
+  //   // Proceed with placing the bid
+  //   const bidderName = this.currentUser?.name || 'Anonymous'; // Replace with actual method to get the user's name
+
+  //   const userId = this.authService.getUserId();  // Example: Retrieve userId from an AuthService
+
+
+  //   this.auctionService.placeBid(this.auction._id, this.newBidAmount, bidderName, userId).subscribe({
+      
+  //     next: () => {
+  //       alert('Bid placed successfully!');
+  //       this.loadTopBids(this.auction._id);
+  //       this.newBidAmount = 0; // Reset the input
+  //     },
+  //     error: () => {
+  //       alert('Failed to place bid. Please try again.');
+  //     },
+  //   });
+    
+  // }
+
+  submitBid(): void {
+    // Check if there are any existing bids
+    const currentHighestBid = this.topBids.length > 0 ? this.topBids[0].amount : this.auction.startingPrice;
+  
+    // Validate that the new bid is higher than the current highest bid
+    if (this.newBidAmount <= currentHighestBid) {
+      this.toastr.error(`Your bid must be greater than the current highest bid of ${currentHighestBid}.`);
+      return;
     }
+  
+    // Get userId from AuthorizationService, and default to empty string if null
+    const userId = this.authService.getUserId() || '';
+  
+    const bidderName = this.currentUser?.name || 'Anonymous'; // Replace with actual method to get the user's name
+  
+    // Proceed with placing the bid
+    this.auctionService.placeBid(this.auction._id, this.newBidAmount, bidderName, userId).subscribe({
+      next: () => {
+        this.toastr.success('Bid placed successfully!');
+        this.loadTopBids(this.auction._id);
+        this.newBidAmount = 0; // Reset the input
+      },
+      error: () => {
+        this.toastr.error('Failed to place bid. Please try again.');
+      },
+    });
   }
 }

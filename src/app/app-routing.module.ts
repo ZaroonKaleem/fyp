@@ -16,6 +16,10 @@ import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { MainLoginComponent } from './client/main-login/main-login.component';
 import { AddAuctionComponent } from './admin/add-auction/add-auction.component';
 import { DeleteAuctionComponent } from './admin/delete-auction/delete-auction.component';
+import { SellItemComponent } from './client/sell-item/sell-item.component';
+import { AuctionRequestsComponent } from './admin/auction-requests/auction-requests.component';
+import { AuctionsListComponent } from './admin/auctions-list/auctions-list.component';
+import { TestToastsComponent } from './client/test-toasts/test-toasts.component';
 // import { AdminGuard } from './auth/admin.guard';
 // import { ViewUsersComponent } from './view-users/view-users.component';
 // import { HomeComponent } from './client/home/home.component';
@@ -38,7 +42,7 @@ import { DeleteAuctionComponent } from './admin/delete-auction/delete-auction.co
 // import { BecomeSellerComponent } from './client/become-seller/become-seller.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login-signup', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'auctions', component: AuctionsComponent },
   { path: 'about', component: AboutComponent },
@@ -47,16 +51,18 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent },
   { path: 'login', component: LoginComponent },
   { path: 'bidding', component: BiddingComponent },
-  { path: 'bidding/:id', component: BiddingComponent }, // Route with parameter
+  { path: 'bidding/:id', component: BiddingComponent },
   { path: 'login-signup', component: MainLoginComponent},
-
-
-              //  ADMIN PANEL ROUTES
-              {
-                path: 'admin-dashboard',
-                component: DashboardComponent,
-                canActivate: [],
-              },
+  { path: 'sell-item', component: SellItemComponent},
+  { path: 'test', component: TestToastsComponent},
+  
+  
+  //  ADMIN PANEL ROUTES
+  {
+    path: 'admin-dashboard',
+    component: DashboardComponent,
+    canActivate: [],
+  },
   { path: 'admin', component: AdminLoginComponent},
   { path: 'admin-login', component: AdminLoginComponent },
   { path: 'add-auction', component: AddAuctionComponent },
@@ -65,6 +71,8 @@ const routes: Routes = [
   { path: 'view-users', component: ViewUsersComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'sidebar', component: SidebarComponent },
+  { path: 'requests', component: AuctionRequestsComponent},
+  { path: 'all-auctions', component: AuctionsListComponent},
   // { path: 'dashboard', component: DashboardComponent },
   // { path: 'users', component: UsersComponent },
   // { path: 'auctions', component: AuctionsComponent },

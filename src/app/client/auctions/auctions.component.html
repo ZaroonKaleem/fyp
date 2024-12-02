@@ -15,7 +15,10 @@
         <h3 class="auction-title">{{ auction.name }}</h3>
         <p class="auction-description">{{ auction.description }}</p>
         <p><strong>Starting Price:</strong> ${{ auction.startingPrice }}</p>
-        <p><strong>Duration:</strong> {{ auction.duration }} hours</p>
+        <p><strong>Duration:</strong> {{ auction.duration }}</p>
+        <div class="button-container">
+          <button class="bid-now-button" (click)="navigateToBidding(auction._id)">Bid Now!</button>
+        </div>
       </div>
     </div>
   </div>

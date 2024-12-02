@@ -1,105 +1,38 @@
-/* header {
-  background-color: #ffffff;
-  color: black;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.my-bids-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+.popup-content h3 {
+  margin-top: 0;
 }
 
-.nav-links {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+.popup-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
 }
 
-.nav-links a {
-  color: black;
-  text-decoration: none;
-  margin: 0 15px;
-  white-space: nowrap;
+.popup-content button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.nav-links a:hover {
-  text-decoration: none;
-  color: blue;
-  transition: .3s ease;
+.popup-content button:hover {
+  background-color: #0056b3;
 }
-
-.right-menu {
-  display: flex;
-  align-items: center;
-}
-
-.right-menu a {
-  color: black;
-  text-decoration: none;
-  margin-left: 15px;
-  display: flex;
-  align-items: center;
-}
-
-.right-menu a:hover {
-  color: blue;
-  transition: .3s ease;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: auto;
-}
-
-@media (max-width: 768px) {
-  .header-content {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav-links {
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
-
-  .right-menu {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .nav-links {
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .nav-links a {
-    margin: 5px 0;
-  }
-
-  .right-menu {
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10px;
-  }
-
-  .right-menu a {
-    margin-left: 0;
-    margin-top: 5px;
-  }
-} */
-
 
 
 header {
@@ -225,4 +158,80 @@ header {
   .dropdown-menu a {
     padding: 15px 0;
   }
+}
+
+
+
+
+.custom-modal {
+  display: none;
+  position: fixed;
+  top: 50px; /* Adjust based on your header height */
+  right: 0;
+  width: 300px; /* Width of the modal */
+  height: auto;
+  max-height: 80vh; /* Ensure it doesn't overflow */
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+/* Modal Content Styling */
+.modal-content {
+  padding: 20px;
+}
+
+/* Modal Header */
+/* .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h5 {
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 10px 0;
+}
+
+.profile-image {
+  display: block;
+  width: 100px; 
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.profile-link {
+  cursor: pointer;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+} */
+
+/* To make the profile image circular and responsive */
+.profile-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover; /* Ensures the image covers the whole circle */
+}
+
+/* Optional: Add some spacing between the image and the text */
+.modal-body p {
+  margin-top: 10px;
 }

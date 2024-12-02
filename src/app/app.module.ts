@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; // <-- Import FormsModule
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +25,14 @@ import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { MainLoginComponent } from './client/main-login/main-login.component';
 import { AddAuctionComponent } from './admin/add-auction/add-auction.component';
 import { DeleteAuctionComponent } from './admin/delete-auction/delete-auction.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { SellItemComponent } from './client/sell-item/sell-item.component';
+import { AuctionRequestsComponent } from './admin/auction-requests/auction-requests.component';
+import { AuctionsListComponent } from './admin/auctions-list/auctions-list.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TestToastsComponent } from './client/test-toasts/test-toasts.component';  // Required for toastr
+
 
 @NgModule({
   declarations: [
@@ -45,16 +54,25 @@ import { DeleteAuctionComponent } from './admin/delete-auction/delete-auction.co
     AdminLoginComponent,
     MainLoginComponent,
     AddAuctionComponent,
-    DeleteAuctionComponent
+    DeleteAuctionComponent,
+    SellItemComponent,
+    AuctionRequestsComponent,
+    AuctionsListComponent,
+    TestToastsComponent
   ],
   imports: [
+    MatDialogModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,  // Import BrowserAnimationsModule
+    ToastrModule.forRoot() 
     
   ],
-  providers: [],
+  providers: [
+    provideAnimationsAsync()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

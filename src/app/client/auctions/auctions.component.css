@@ -109,7 +109,28 @@
   margin-bottom: 15px;
   font-size: 1rem;
 }
+.bid-now-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-transform: uppercase;
+}
 
+.bid-now-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.bid-now-button:active {
+  background-color: #003f7f;
+  transform: scale(1);
+}
 /* Mobile responsiveness */
 @media (max-width: 768px) {
   .auction-container {
